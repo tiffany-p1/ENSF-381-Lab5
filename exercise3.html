@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lab5 - Exercise 1</title>
+    </head>
+    <body>
+        <input type="text" id="textInput" placeholder="Type something here..."/>
+        <label id="textLabel"></label>
+        <button id="redButton">Red</button>
+        <button id="blueButton">Blue</button>
+        <button id="greenButton">Green</button>
+        <button id="orangeButton">Orange</button>
+        <button id="purpleButton">Purple</button>
+    </body>
+    <script type="text/javascript">
+        async function retrieveData(id) {
+            try{
+                const response = await fetch("https://67c1ff3761d8935867e50cf9.mockapi.io/users_api");
+                const data = await response.json();
+                console.log('Fetched Data', data);
+                for(var i = 0; i < data.length; i++){
+                    if(id == data[i].id){
+                        return `ID: ${data[i].id}, Name: ${data[i].first_name}, Group: ${data[i].user_group}`;
+                    }
+                }
+                return "No users were found with the provided User_ID.";
+            }
+            catch (error){
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        const textbox = document.getElementById("textInput");
+        const label = document.getElementById("textLabel");
+        textbox.addEventListener('keypress', async function(event) {
+            if (event.key == "Enter") {
+                let data = await retrieveData(textbox.value);
+                label.textContent = data;
+                textbox.value = "";
+            }
+            })
+
+
+        const redButton = document.getElementById("redButton");
+        redButton.addEventListener('click', () => {
+            label.style.color = "red";
+        })
+
+        const blueButton = document.getElementById("blueButton");
+        blueButton.addEventListener('click', () => {
+            label.style.color = "blue";
+        })
+
+        const greenButton = document.getElementById("greenButton");
+        greenButton.addEventListener('click', () => {
+            label.style.color = "green";
+        })
+
+        const orangeButton = document.getElementById("orangeButton");
+        orangeButton.addEventListener('click', () => {
+            label.style.color = "orange";
+        })
+
+        const purpleButton = document.getElementById("purpleButton"); 
+        purpleButton.addEventListener('click', () => {
+            label.style.color = "purple";
+        })     
+    </script>
+</html>
